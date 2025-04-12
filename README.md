@@ -1,45 +1,92 @@
-# Welcome Data dynamos 👋
+# Hospital Resource Management System
 
-Hello Team **Data dynamos** from **Rajarajeshwari college of engineering**,
+A web-based system that allows hospitals to share and request medical resources based on availability and proximity.
 
-Welcome to the Hackathon! We're excited to have you on board and can't wait to see what you'll build under the theme **"Improving healthcare through technology"** 
+## Features
 
-## Team Details
+- **Register Resources**: Hospitals can register their available medical resources
+- **Search Resources**: Find available resources from other hospitals
+- **Request Resources**: Request needed resources from other hospitals
+- **Proximity-Based Results**: Find resources sorted by distance and availability
+- **Resource Management**: View and manage your hospital's registered resources
 
-- **Team Number:** 66  
-- **Team Name:** Data dynamos
-- **Team Leader:** Arjun H  
-- **Email:** arjunh7777@gmail.com  
-- **Phone:** +91 99863 28917  
+## Tech Stack
 
-### Team Members:
-- Vinod E 
-- Venkatesh Raju s 
-- Supreeth 
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
 
-## Problem Statement
+## Prerequisites
 
-> **There is a critical need to leverage technology to improve access, efficiency, and quality of health...**
+Before running this application, make sure you have the following installed:
 
----
+- Node.js (v12 or higher)
+- MongoDB (local installation or MongoDB Atlas account)
 
-### Let's Get Started 
+## Installation
 
-This repository has been set up for your hackathon project. Use it to manage your code, collaborate, and share your progress.
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/hospital-management-system.git
+   cd hospital-management-system
+   ```
 
-**Important Guidelines - Please Read Carefully**
+2. Install dependencies:
+   ```
+   npm install
+   ```
 
-- Do **not** make any commits **before the allotted start date and time**. Early commits may result in getting caught.
-- Commit your work **regularly** to showcase your progress throughout the hackathon.
+3. Create a `.env` file in the project root and add the following:
+   ```
+   PORT=3001
+   MONGODB_URI=mongodb://localhost:27017/hospitalResourceDB
+   ```
+   Note: Replace the MongoDB URI with your own connection string if using MongoDB Atlas.
 
-- Maintain **professionalism and integrity** at all times. Any form of plagiarism or rule-breaking will lead to strict action.
+## Running the Application
 
-Let's keep it fair, fun, and impactful! 
----
+1. Start the server:
+   ```
+   npm start
+   ```
 
-**Good luck, Team Data dynamos! Happy coding!**
+2. Access the application at:
+   ```
+   http://localhost:3001
+   ```
 
-If you need any support during the hackathon, don't hesitate to reach out to the co-ordinators.
+## API Endpoints
 
-Cheers,  
-_Advaya Hackathon Team_
+### Resources
+
+- `POST /api/resources` - Register a new resource
+- `POST /api/resources/search` - Search for resources with filters
+- `GET /api/hospitals/resources?hospitalName=xyz` - Get resources for a specific hospital
+- `POST /api/resources/request` - Request a resource from another hospital
+- `DELETE /api/resources/:id` - Delete a resource
+
+## Project Structure
+
+```
+hospital-management-system/
+├── public/
+│   ├── assets/          # SVG icons and images
+│   ├── css/             # CSS stylesheets
+│   ├── js/              # JavaScript files
+│   ├── index.html       # Home page
+│   ├── register.html    # Register resources page
+│   └── search.html      # Search resources page
+├── server.js            # Express server and API endpoints
+├── .env                 # Environment variables
+├── package.json         # Project dependencies
+└── README.md            # This file
+```
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Icons provided by FontAwesome
+- UI design inspired by modern healthcare systems 
