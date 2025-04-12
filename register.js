@@ -1,21 +1,18 @@
-/**
- * Hospital Resource Management System
- * Register Resources JavaScript
- */
+
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize form handlers
+   
     initializeForm();
     
-    // Initialize hospital search
+   
     initializeHospitalSearch();
     
-    // Load saved hospital name if available
+   
     const savedHospitalName = localStorage.getItem('hospitalName');
     if (savedHospitalName) {
         document.getElementById('hospitalName').value = savedHospitalName;
         
-        // Also load hospital resources if hospital name is available
+       
         const hospitalSearchInput = document.getElementById('hospitalSearch');
         if (hospitalSearchInput) {
             hospitalSearchInput.value = savedHospitalName;
@@ -24,9 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/**
- * Initialize the resource registration form
- */
+
+
 function initializeForm() {
     const resourceForm = document.getElementById('resourceForm');
     const resetBtn = document.getElementById('resetBtn');
@@ -35,7 +31,7 @@ function initializeForm() {
         resourceForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
+           
             const formData = new FormData(resourceForm);
             const resourceData = {
                 hospitalName: formData.get('hospitalName'),
@@ -44,10 +40,10 @@ function initializeForm() {
                 quantity: parseInt(formData.get('quantity'), 10)
             };
             
-            // Save hospital name to localStorage for future use
+         
             localStorage.setItem('hospitalName', resourceData.hospitalName);
             
-            // Submit data to API
+           
             registerResource(resourceData);
         });
     }
@@ -59,10 +55,7 @@ function initializeForm() {
     }
 }
 
-/**
- * Register a resource via API
- * @param {Object} resourceData - The resource data to register
- */
+
 async function registerResource(resourceData) {
     try {
         const response = await fetch('/api/resources', {
@@ -79,12 +72,12 @@ async function registerResource(resourceData) {
             showNotification('Resource registered successfully!', 'success');
             document.getElementById('resourceForm').reset();
             
-            // Reload hospital resources if the hospital name input is filled
+          
             const hospitalSearch = document.getElementById('hospitalSearch');
             if (hospitalSearch && hospitalSearch.value) {
                 searchHospitalResources(hospitalSearch.value);
             } else if (resourceData.hospitalName) {
-                // Set the hospital search input to the registered hospital name
+                
                 if (hospitalSearch) {
                     hospitalSearch.value = resourceData.hospitalName;
                     searchHospitalResources(resourceData.hospitalName);
@@ -99,9 +92,6 @@ async function registerResource(resourceData) {
     }
 }
 
-/**
- * Initialize hospital search functionality
- */
 function initializeHospitalSearch() {
     const searchHospitalBtn = document.getElementById('searchHospitalBtn');
     const hospitalSearch = document.getElementById('hospitalSearch');
@@ -116,7 +106,7 @@ function initializeHospitalSearch() {
             }
         });
         
-        // Also trigger search on Enter key
+        
         hospitalSearch.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 const hospitalName = hospitalSearch.value.trim();
@@ -130,10 +120,7 @@ function initializeHospitalSearch() {
     }
 }
 
-/**
- * Search for resources registered by a hospital
- * @param {string} hospitalName - The name of the hospital to search for
- */
+
 async function searchHospitalResources(hospitalName) {
     try {
         const response = await fetch(`/api/hospitals/resources?hospitalName=${encodeURIComponent(hospitalName)}`);
@@ -145,7 +132,7 @@ async function searchHospitalResources(hospitalName) {
             if (result.resources.length === 0) {
                 resourcesResult.innerHTML = `<p>No resources found for hospital: ${hospitalName}</p>`;
             } else {
-                // Build resources HTML
+           
                 let resourcesHTML = `
                     <h3>Resources for ${hospitalName}</h3>
                     <p>Total resources: ${result.total}</p>
@@ -166,7 +153,7 @@ async function searchHospitalResources(hospitalName) {
                 resourcesHTML += `</div>`;
                 resourcesResult.innerHTML = resourcesHTML;
                 
-                // Add event listeners to delete buttons
+                
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const resourceId = this.getAttribute('data-id');
@@ -186,10 +173,7 @@ async function searchHospitalResources(hospitalName) {
     }
 }
 
-/**
- * Delete a resource
- * @param {string} resourceId - The ID of the resource to delete
- */
+
 async function deleteResource(resourceId) {
     try {
         const response = await fetch(`/api/resources/${resourceId}`, {
@@ -204,7 +188,7 @@ async function deleteResource(resourceId) {
         if (result.success) {
             showNotification('Resource deleted successfully!', 'success');
             
-            // Reload hospital resources
+           
             const hospitalSearch = document.getElementById('hospitalSearch');
             if (hospitalSearch && hospitalSearch.value) {
                 searchHospitalResources(hospitalSearch.value);
@@ -218,11 +202,7 @@ async function deleteResource(resourceId) {
     }
 }
 
-/**
- * Show notification
- * @param {string} message - The message to display
- * @param {string} type - The type of notification ('success' or 'error')
- */
+
 function showNotification(message, type = 'success') {
     const notification = document.getElementById('notification');
     if (!notification) return;
@@ -232,21 +212,16 @@ function showNotification(message, type = 'success') {
         messageEl.textContent = message;
     }
     
-    // Set notification type
+  
     notification.className = 'notification show';
     notification.classList.add(type);
     
-    // Hide notification after 3 seconds
+  
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
 }
 
-/**
- * Format date
- * @param {string|Date} date - The date to format
- * @returns {string} - Formatted date string
- */
 function formatDate(date) {
     if (!date) return 'Unknown';
     
