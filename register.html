@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Resources - Hospital Resource Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>HRMS</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/register" class="active">Register Resources</a></li>
+                <li><a href="/search">Search Resources</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="landing-container">
+        <div class="form-container">
+            <h2>Register Hospital Resources</h2>
+            <form id="resourceForm">
+                <div class="form-group">
+                    <label for="hospitalName">Hospital Name</label>
+                    <input type="text" id="hospitalName" name="hospitalName" required>
+                </div>
+                <div class="form-group">
+                    <label for="hospitalAddress">Hospital Address</label>
+                    <input type="text" id="hospitalAddress" name="hospitalAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="resourceType">Resource Type</label>
+                    <select id="resourceType" name="resourceType" required>
+                        <option value="" disabled selected>Select a resource type</option>
+                        <optgroup label="Antibiotics">
+                            <option value="antibiotics_amoxicillin">Amoxicillin</option>
+                            <option value="antibiotics_azithromycin">Azithromycin</option>
+                            <option value="antibiotics_ciprofloxacin">Ciprofloxacin</option>
+                            <option value="antibiotics_penicillin">Penicillin</option>
+                            <option value="antibiotics_cephalexin">Cephalexin</option>
+                        </optgroup>
+                        <optgroup label="Analgesics">
+                            <option value="analgesics_paracetamol">Paracetamol/Acetaminophen</option>
+                            <option value="analgesics_ibuprofen">Ibuprofen</option>
+                            <option value="analgesics_naproxen">Naproxen</option>
+                            <option value="analgesics_aspirin">Aspirin</option>
+                            <option value="analgesics_codeine">Codeine</option>
+                            <option value="analgesics_morphine">Morphine</option>
+                        </optgroup>
+                        <optgroup label="Antivirals">
+                            <option value="antivirals_oseltamivir">Oseltamivir (Tamiflu)</option>
+                            <option value="antivirals_acyclovir">Acyclovir</option>
+                            <option value="antivirals_lopinavir">Lopinavir/Ritonavir</option>
+                        </optgroup>
+                        <optgroup label="COVID-19 Vaccines">
+                            <option value="covid_vaccines_pfizer">Pfizer-BioNTech COVID-19 Vaccine</option>
+                            <option value="covid_vaccines_moderna">Moderna COVID-19 Vaccine</option>
+                            <option value="covid_vaccines_astrazeneca">AstraZeneca COVID-19 Vaccine</option>
+                            <option value="covid_vaccines_jj">Johnson & Johnson COVID-19 Vaccine</option>
+                        </optgroup>
+                        <optgroup label="Equipment">
+                            <option value="ventilators_icu">ICU Ventilator</option>
+                            <option value="ventilators_transport">Transport Ventilator</option>
+                            <option value="ppe_masks_n95">N95 Respirator Masks</option>
+                            <option value="ppe_masks_surgical">Surgical Masks</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity Available</label>
+                    <input type="number" id="quantity" name="quantity" min="1" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-primary btn-secondary" id="resetBtn">Reset</button>
+                    <button type="submit" class="btn-primary">Register Resource</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-container" id="registeredResourcesSection">
+            <h2>Your Registered Resources</h2>
+            <div class="search-container">
+                <input type="text" id="hospitalSearch" placeholder="Enter hospital name to view resources">
+                <button class="btn-primary" id="searchHospitalBtn">Search</button>
+            </div>
+            <div id="resourcesResult">
+                <p class="placeholder-text">Enter your hospital name to view your registered resources.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Hospital Resource Management System. All rights reserved.</p>
+    </footer>
+
+    <!-- Notification element -->
+    <div class="notification" id="notification">
+        <div class="notification-icon"></div>
+        <div class="notification-message"></div>
+    </div>
+
+    <script src="/js/register.js"></script>
+</body>
+</html> 

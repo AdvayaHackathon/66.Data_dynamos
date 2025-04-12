@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Resources - Hospital Resource Management System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>HRMS</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/register">Register Resources</a></li>
+                <li><a href="/search" class="active">Search Resources</a></li>
+                <li><a href="/#about">About</a></li>
+                <li><a href="/#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="landing-container">
+        <div class="search-panel">
+            <h2>Search Hospital Resources</h2>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search by resource name or hospital">
+                <button class="btn-primary" id="searchBtn">Search</button>
+            </div>
+            
+            <div class="filter-options">
+                <h3>Filter Resources</h3>
+                <div class="filter-groups">
+                    <div class="filter-group">
+                        <h4>Antibiotics</h4>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antibiotics_amoxicillin">
+                            Amoxicillin
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antibiotics_azithromycin">
+                            Azithromycin
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antibiotics_ciprofloxacin">
+                            Ciprofloxacin
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antibiotics_penicillin">
+                            Penicillin
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antibiotics_cephalexin">
+                            Cephalexin
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Analgesics</h4>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_paracetamol">
+                            Paracetamol
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_ibuprofen">
+                            Ibuprofen
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_naproxen">
+                            Naproxen
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_aspirin">
+                            Aspirin
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_codeine">
+                            Codeine
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="analgesics_morphine">
+                            Morphine
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Antivirals</h4>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antivirals_oseltamivir">
+                            Oseltamivir
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antivirals_acyclovir">
+                            Acyclovir
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="antivirals_lopinavir">
+                            Lopinavir
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Vaccines</h4>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="covid_vaccines_pfizer">
+                            Pfizer COVID-19
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="covid_vaccines_moderna">
+                            Moderna COVID-19
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="covid_vaccines_astrazeneca">
+                            AstraZeneca COVID-19
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="covid_vaccines_jj">
+                            Johnson & Johnson
+                        </label>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h4>Equipment</h4>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="ventilators_icu">
+                            ICU Ventilator
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="ventilators_transport">
+                            Transport Ventilator
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="ppe_masks_n95">
+                            N95 Masks
+                        </label>
+                        <label>
+                            <input type="checkbox" class="resource-filter" value="ppe_masks_surgical">
+                            Surgical Masks
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button type="button" class="btn-primary btn-secondary" id="clearFiltersBtn">Clear Filters</button>
+                    <button type="button" class="btn-primary" id="applyFiltersBtn">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section" id="resultsSection">
+            <h2>Search Results</h2>
+            <div id="resultsContainer" class="results-list">
+                <p class="placeholder-text">Use the search and filters above to find resources.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Hospital Resource Management System. All rights reserved.</p>
+    </footer>
+
+    <!-- Resource Request Modal -->
+    <div class="modal" id="requestModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Request Resource</h2>
+            <form id="requestForm">
+                <input type="hidden" id="resourceId" name="resourceId">
+                <div class="form-group">
+                    <label for="requestingHospital">Your Hospital Name</label>
+                    <input type="text" id="requestingHospital" name="requestingHospital" required>
+                </div>
+                <div class="form-group">
+                    <label for="requestQuantity">Quantity Needed</label>
+                    <input type="number" id="requestQuantity" name="requestQuantity" min="1" required>
+                </div>
+                <p id="availableQuantity">Available: <span></span></p>
+                <div class="form-actions">
+                    <button type="button" class="btn-primary btn-secondary" id="cancelRequestBtn">Cancel</button>
+                    <button type="submit" class="btn-primary">Submit Request</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification element -->
+    <div class="notification" id="notification">
+        <div class="notification-icon"></div>
+        <div class="notification-message"></div>
+    </div>
+
+    <script src="/js/search.js"></script>
+</body>
+</html> 
