@@ -1,25 +1,19 @@
-/**
- * Hospital Resource Management System
- * Search Resources JavaScript
- */
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize search functionality
+   
     initializeSearch();
     
-    // Initialize filter functionality
+  
     initializeFilters();
     
-    // Initialize modal functionality
+   
     initializeModal();
 });
 
-// Keep track of selected filters
+
 let selectedFilters = [];
 
-/**
- * Initialize search functionality
- */
+
 function initializeSearch() {
     const searchBtn = document.getElementById('searchBtn');
     const searchInput = document.getElementById('searchInput');
@@ -29,7 +23,6 @@ function initializeSearch() {
             performSearch();
         });
         
-        // Also trigger search on Enter key
         searchInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 performSearch();
@@ -38,9 +31,7 @@ function initializeSearch() {
     }
 }
 
-/**
- * Initialize filter functionality
- */
+
 function initializeFilters() {
     const applyFiltersBtn = document.getElementById('applyFiltersBtn');
     const clearFiltersBtn = document.getElementById('clearFiltersBtn');
@@ -67,7 +58,6 @@ function initializeFilters() {
                 checkbox.checked = false;
             });
             
-            // Clear selectedFilters array
             selectedFilters = [];
             
             performSearch();
@@ -75,9 +65,7 @@ function initializeFilters() {
     }
 }
 
-/**
- * Perform search with current query and filters
- */
+
 async function performSearch() {
     const searchInput = document.getElementById('searchInput');
     const query = searchInput ? searchInput.value.trim() : '';
@@ -85,17 +73,16 @@ async function performSearch() {
     
     if (!resultsContainer) return;
     
-    // Show loading state
-    resultsContainer.innerHTML = '<p>Searching for resources...</p>';
+      resultsContainer.innerHTML = '<p>Searching for resources...</p>';
     
     try {
-        // Build request URL with query parameter
+    
         let url = '/api/resources/search';
         if (query) {
             url += `?query=${encodeURIComponent(query)}`;
         }
         
-        // Make API request
+       
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -115,8 +102,7 @@ async function performSearch() {
                     <p>Try adjusting your search terms or filters.</p>
                 `;
             } else {
-                // Build resource cards HTML
-                let resourcesHTML = '';
+               let resourcesHTML = '';
                 
                 result.resources.forEach(resource => {
                     resourcesHTML += `
@@ -138,7 +124,7 @@ async function performSearch() {
                 
                 resultsContainer.innerHTML = resourcesHTML;
                 
-                // Add event listeners to request buttons
+                
                 document.querySelectorAll('.request-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         openRequestModal(
@@ -159,9 +145,7 @@ async function performSearch() {
     }
 }
 
-/**
- * Initialize modal functionality
- */
+
 function initializeModal() {
     const modal = document.getElementById('requestModal');
     const closeBtn = modal ? modal.querySelector('.close-btn') : null;
@@ -180,7 +164,7 @@ function initializeModal() {
         });
     }
     
-    // Close modal when clicking outside of it
+   
     window.addEventListener('click', function(e) {
         if (e.target === modal) {
             closeModal();
@@ -198,22 +182,16 @@ function initializeModal() {
                 quantity: parseInt(formData.get('requestQuantity'), 10)
             };
             
-            // Save hospital name to localStorage for future use
+           
             localStorage.setItem('hospitalName', requestData.requestingHospital);
             
-            // Submit request
+            
             submitRequest(requestData);
         });
     }
 }
 
-/**
- * Open the request modal
- * @param {string} resourceId - ID of the resource
- * @param {string} resourceName - Name of the resource
- * @param {string} hospitalName - Name of the hospital providing the resource
- * @param {number} availableQuantity - Quantity available
- */
+
 function openRequestModal(resourceId, resourceName, hospitalName, availableQuantity) {
     const modal = document.getElementById('requestModal');
     const modalTitle = modal ? modal.querySelector('h2') : null;
@@ -223,28 +201,26 @@ function openRequestModal(resourceId, resourceName, hospitalName, availableQuant
     const availableQuantitySpan = modal ? modal.querySelector('#availableQuantity span') : null;
     
     if (modal && modalTitle && resourceIdInput && quantityInput && availableQuantitySpan) {
-        // Set modal title
+        
         modalTitle.textContent = `Request ${resourceName} from ${hospitalName}`;
         
-        // Set form values
+       
         resourceIdInput.value = resourceId;
         quantityInput.max = availableQuantity;
         availableQuantitySpan.textContent = availableQuantity;
         
-        // Load hospital name from localStorage if available
+        
         const savedHospitalName = localStorage.getItem('hospitalName');
         if (savedHospitalName && requestingHospitalInput) {
             requestingHospitalInput.value = savedHospitalName;
         }
         
-        // Show modal
+       
         modal.style.display = 'block';
     }
 }
 
-/**
- * Close the request modal
- */
+
 function closeModal() {
     const modal = document.getElementById('requestModal');
     if (modal) {
@@ -252,10 +228,7 @@ function closeModal() {
     }
 }
 
-/**
- * Submit a resource request
- * @param {Object} requestData - The request data
- */
+
 async function submitRequest(requestData) {
     try {
         const response = await fetch('/api/resources/request', {
@@ -272,7 +245,7 @@ async function submitRequest(requestData) {
             showNotification('Resource requested successfully!', 'success');
             closeModal();
             
-            // Reload search results to reflect updated quantities
+           
             performSearch();
         } else {
             showNotification('Error: ' + (result.error || 'Failed to request resource'), 'error');
@@ -283,28 +256,20 @@ async function submitRequest(requestData) {
     }
 }
 
-/**
- * Format distance
- * @param {number} distance - The distance in kilometers
- * @returns {string} - Formatted distance string
- */
+
 function formatDistance(distance) {
     if (typeof distance !== 'number') return 'Unknown';
     
     if (distance < 1) {
-        // If less than 1 km, show in meters
+       
         return Math.round(distance * 1000) + ' m';
     } else {
-        // Otherwise show in kilometers with 1 decimal place
+       
         return distance.toFixed(1) + ' km';
     }
 }
 
-/**
- * Show notification
- * @param {string} message - The message to display
- * @param {string} type - The type of notification ('success' or 'error')
- */
+
 function showNotification(message, type = 'success') {
     const notification = document.getElementById('notification');
     if (!notification) return;
@@ -314,11 +279,10 @@ function showNotification(message, type = 'success') {
         messageEl.textContent = message;
     }
     
-    // Set notification type
+    
     notification.className = 'notification show';
     notification.classList.add(type);
-    
-    // Hide notification after 3 seconds
+
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
